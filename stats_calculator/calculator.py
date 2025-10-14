@@ -1,5 +1,11 @@
-
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "requests",
+# ]
+# ///
 import math
+import requests
 
 def get_class_marks(class_intervals):
     """Calculates the class marks from class intervals."""
