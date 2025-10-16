@@ -24,7 +24,7 @@ This directory contains code and executables for digital logic simplification, e
 ### 1. Compile the C Program
 
 ```sh
-gcc kmap.c -o kmap
+gcc kmap.c -o kmap -lm
 ```
 
 ### 2. Ensure Python Script Is Present
