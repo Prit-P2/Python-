@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<math.h>
 #include<string.h>
+#include<stdlib.h>
 int main()
 {
     int nv,no,v[10][10],o[10][10],mid,w;
@@ -37,38 +38,30 @@ int main()
             scanf("%d",&o[j][i]);
         }
     }
-    char e[100];
-    int in=0;
-    int first_term = 1;
-    for(int i=0;i<no;i++)
-    {e[in++]='\n';
-     first_term=1;
-        for(int j=0;j<pow(2,nv);j++)
-        {
-            if(o[j][i]==1)
-            {
-                if (!first_term) {
-                    e[in++] = '+';
-                }
-                first_term = 0;
+    for (int i = 0; i < no; i++) {
+        char command[2048] = "";
+        // Start building the command to call the python script
+        sprintf(command, "python kmap_solver.py %d", nv);
 
-                char c='A';
-                for(int k=0;k<nv;k++)
-                {
-                    if(v[j][k]==0)
-                    {
-                        e[in++]=c;
-                        e[in++]='\'';
-                    }else if(v[j][k]==1)
-                    {
-                        e[in++]=c;
-                    }
-                    c++;
-                }
+        int has_minterms = 0;
+        for (int j = 0; j < pow(2, nv); j++) {
+            if (o[j][i] == 1) {
+                has_minterms = 1;
+                // Append the minterm index to the command
+                char minterm_str[10];
+                sprintf(minterm_str, " %d", j);
+                strcat(command, minterm_str);
             }
         }
+
+        printf("\nFor output %d, the simplified expression is: ", i + 1);
+        if (has_minterms) {
+            // Execute the command and print its output
+            fflush(stdout); // Ensure the printf above is displayed first
+            system(command);
+        } else {
+            printf("0\n");
+        }
     }
-    e[in]='\0';
-    printf("%s\n",e);
     return 0;
 }
